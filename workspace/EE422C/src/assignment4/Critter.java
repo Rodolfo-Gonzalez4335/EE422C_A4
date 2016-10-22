@@ -59,12 +59,11 @@ public abstract class Critter {
 		if (!moved){
 			moved = true;
 			change(direction);
-			if(!checkPosition(x_coord, y_coord) && cnt == 1){
-				moved = false;
+			if(cnt == 1 && !moved){
 				change(direction);
 			}
 		}
-		//else moved=true;
+		moved=true;
 		energy= energy-Params.walk_energy_cost;
 	}
 	
@@ -74,83 +73,110 @@ public abstract class Critter {
 		{
 		case 0 :
 			if(!moved || checkPosition((x_coord+1)%Params.world_width, y_coord) || cnt == 0){
+				if(!checkPosition((x_coord+1)%Params.world_width, y_coord))
+					moved = false;
+				else
+					moved = true;
 				x_coord= (x_coord+1)%Params.world_width;
 			}
 			else{
 				moved = false;
 				change(4);
-				moved = true;
 			}
 			break;
 		case 1 :
 			if(!moved || checkPosition((x_coord+1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
+				if(checkPosition((x_coord+1)%Params.world_width, (y_coord+1)%Params.world_height))
+					moved = false;
+				else
+					moved = true;
 				x_coord =(x_coord+1)%Params.world_width;
 				y_coord = (y_coord+1)%Params.world_height;
 			}
 			else{
 				moved = false;
 				change(5);
-				moved = true;
 			}
 			break;
 		case 2 :
-			if(!moved || checkPosition(x_coord, (y_coord+1)%Params.world_height) || cnt == 0)
+			if(!moved || checkPosition(x_coord, (y_coord+1)%Params.world_height) || cnt == 0){
+				if(checkPosition(x_coord, (y_coord+1)%Params.world_height))
+					moved = false;
+				else
+					moved = true;
 				y_coord = (y_coord+1)%Params.world_height;
+			}
 			else{
 				moved = false;
 				change(6);
-				moved = true;
 			}
 			break;
 		case 3:
 			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
+				if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, (y_coord+1)%Params.world_height))
+					moved = false;
+				else
+					moved = true;
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 				y_coord = (y_coord+1)%Params.world_height;
 			}
 			else{
 				moved = false;
 				change(7);
-				moved = true;
 			}
 			break;
 		case 4:
-			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord) || cnt == 0)
+			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord) || cnt == 0){
+				if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord))
+					moved = false;
+				else
+					moved = true;
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
+			}
 			else{
 				moved = false;
 				change(0);
-				moved = true;
 			}
 			break;
 		case 5:
 			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+				if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height))
+					moved = false;
+				else
+					moved = true;
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
 			}
 			else{
 				moved = false;
 				change(1);
-				moved = true;
 			}
 			break;
 		case 6:
-			if(!moved || checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0)
+			if(!moved || checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+				if(checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height))
+					moved = false;
+				else
+					moved = true;
 				y_coord=(Params.world_height+y_coord-1)%Params.world_height;
+			}
 			else{
 				moved = false;
 				change(2);
-				moved = true;
 			}
 			break;
 		case 7:
 			if(!moved || checkPosition((x_coord+1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+				if(checkPosition((x_coord+1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height))
+					moved = false;
+				else
+					moved = true;
 				x_coord = (x_coord+1)%Params.world_width;
 				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
 			}
 			else{
 				moved = false;
 				change(3);
-				moved = true;
 			}
 			break;
 		}
@@ -164,7 +190,7 @@ public abstract class Critter {
 			moved = true;
 			change(direction);
 		}
-		//else moved = true;
+		moved = true;
 		energy = energy - Params.run_energy_cost;
 	}
 	
