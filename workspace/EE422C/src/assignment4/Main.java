@@ -139,7 +139,6 @@ public class Main {
     			else if(commands.get(0).equals("make")){
     				if(commands.size() == 3){
     					if(Critter.getInstances(commands.get(1)).size() != 0){
-    						System.out.println("are you here?");
 	    					int x = 0;
 	        				try{
 	        					x= Integer.parseInt(commands.get(2));
