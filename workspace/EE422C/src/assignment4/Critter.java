@@ -70,14 +70,14 @@ public abstract class Critter {
 		switch (direction)
 		{
 		case 0 :
-			if(checkPosition((x_coord+1)%Params.world_width, y_coord) || cnt == 0){
+			if(!moved || checkPosition((x_coord+1)%Params.world_width, y_coord) || cnt == 0){
 				x_coord= (x_coord+1)%Params.world_width;
 			}
 			else
 				change(1);
 			break;
 		case 1 :
-			if(checkPosition((x_coord+1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
+			if(!moved || checkPosition((x_coord+1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
 				x_coord =(x_coord+1)%Params.world_width;
 				y_coord = (y_coord+1)%Params.world_height;
 			}
@@ -85,13 +85,13 @@ public abstract class Critter {
 				change(2);
 			break;
 		case 2 :
-			if(checkPosition(x_coord, (y_coord+1)%Params.world_height) || cnt == 0)
+			if(!moved || checkPosition(x_coord, (y_coord+1)%Params.world_height) || cnt == 0)
 				y_coord = (y_coord+1)%Params.world_height;
 			else
 				change(3);
 			break;
 		case 3:
-			if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
+			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 				y_coord = (y_coord+1)%Params.world_height;
 			}
@@ -99,13 +99,13 @@ public abstract class Critter {
 				change(4);
 			break;
 		case 4:
-			if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord) || cnt == 0)
+			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord) || cnt == 0)
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 			else
 				change(5);
 			break;
 		case 5:
-			if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
 			}
@@ -113,13 +113,13 @@ public abstract class Critter {
 				change(6);
 			break;
 		case 6:
-			if(checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0)
+			if(!moved || checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0)
 				y_coord=(Params.world_height+y_coord-1)%Params.world_height;
 			else
 				change(7);
 			break;
 		case 7:
-			if(checkPosition((x_coord+1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+			if(!moved || checkPosition((x_coord+1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
 				x_coord = (x_coord+1)%Params.world_width;
 				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
 			}
@@ -130,10 +130,10 @@ public abstract class Critter {
 	
 	protected final void run(int direction) {    //TODO
 		//checking if it already moved since it can only move once per time step
-		if (moved==false) {
-			change(direction);
+		if (!moved) {
 			change(direction);
 			moved = true;
+			change(direction);
 		}
 		//else moved = true;
 		energy = energy - Params.run_energy_cost;
@@ -421,7 +421,7 @@ public abstract class Critter {
 		{
 			Critter x = population.get(i);
 			x.doTimeStep();		//we can make them fight here
-			x.cnt++;
+			x.cnt++;	//increasing count to 1
 		}
 		
 		//do the fights
@@ -466,7 +466,7 @@ public abstract class Critter {
 		{					
 			Critter x = population.get(i);
 			x.energy= x.energy-Params.rest_energy_cost;
-			x.cnt = 0;
+			x.cnt = 0;		//setting count back to 0
 		}
 		// deleting Critter
 		for (int i=0; i<population.size(); i++)
