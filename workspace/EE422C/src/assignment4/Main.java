@@ -139,6 +139,7 @@ public class Main {
     			else if(commands.get(0).equals("make")){
     				if(commands.size() == 3){
     					if(Critter.getInstances(commands.get(1)).size() != 0){
+    						System.out.println("are you here?");
 	    					int x = 0;
 	        				try{
 	        					x= Integer.parseInt(commands.get(2));
@@ -151,8 +152,13 @@ public class Main {
     					else
     						Critter.processing(input);
     				}
-    				else if(commands.size() == 2)
-    					Critter.makeCritter(commands.get(1));
+    				else if(commands.size() == 2){
+    					if(Critter.getInstances(commands.get(1)).size() != 0){
+    						Critter.makeCritter(commands.get(1));
+    					}
+    					else
+    						Critter.processing(input);
+    				}
     				else
     					Critter.invalid(input);
     			}
@@ -185,72 +191,7 @@ public class Main {
     	        	Critter.invalid(input);
     			}
         	}
-        	
-        		/*if (commands.size()==1)
-        		{
-        			if (commands.get(0).equals("quit"))
-        				stop= true;
-        			else if (commands.get(0).equals("show"))
-        				Critter.displayWorld();
-        			else if (commands.get(0).equals("step"))
-        				TestCritter.worldTimeStep();
-        			else{
-        	        	System.out.println("invalid command: " + input); 
-        	        }
-        		}
-        		else if (commands.size()==2)
-        		{
-        			if (commands.get(0).equals("step"))
-        			{
-        				int x = 0;
-        				try{
-        				x = Integer.parseInt(commands.get(1));//need to check if valid input
-        				}catch(NumberFormatException e){
-        					System.out.println("error processing: " + commands.get(0) + " " + commands.get(1));
-        				}
-        				for (int i=0; i<x; i++)
-        					TestCritter.worldTimeStep();
-        			}
-        			else if (commands.get(0).equals("seed"))
-        			{
-        				int x = 0;
-        				try{
-        					x = Integer.parseInt(commands.get(1));//need to check if valid input
-        				}catch(NumberFormatException e){
-        					System.out.println("error processing: " + commands.get(0) + " " + commands.get(1));
-        				}
-        				Critter.setSeed(x);
-        			}
-        			else if (commands.get(0).equals("make"))//this one can have three commands
-        			{
-        					Critter.makeCritter(commands.get(1));
-        			}
-        			else if (commands.get(0).equals("stats"))//still need to implement all three
-        			{
-        				Critter.runStats(Critter.getInstances(commands.get(1)));
-        			}	
-        			else{
-        	        	System.out.println("invalid command: " + input);
-        	        }
-        		}
-        		else if(commands.size() == 3){
-        			if(commands.get(0).equals("make")){
-        				int x = 0;
-        				try{
-        					x= Integer.parseInt(commands.get(2));
-        				}catch(NumberFormatException e){
-        					
-        					System.out.println("error processing: " + input); 
-        				}
-        				for(int i = 0; i<x; i++)
-        					Critter.makeCritter(commands.get(1));
-        			}
-        		}
-        		//commands.clear();
-        		else{
-                	System.out.println("invalid command: " + input);
-                }*/
-        	}
+        }
         System.out.println("GLHF");
         
         /* Write your code above */
