@@ -27,7 +27,6 @@ public abstract class Critter {
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	private int cnt = 0;
-	//private List<Critter> savedpopulation = new java.util.ArrayList<Critter>();
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -57,9 +56,13 @@ public abstract class Critter {
 	
 	protected final void walk(int direction) {   //TODO
 		//checking if it already moved since it can only move once per time step
-		if (!moved){ 
-			change(direction);
+		if (!moved){
 			moved = true;
+			change(direction);
+			if(!checkPosition(x_coord, y_coord) && cnt == 1){
+				moved = false;
+				change(direction);
+			}
 		}
 		//else moved=true;
 		energy= energy-Params.walk_energy_cost;
@@ -73,55 +76,81 @@ public abstract class Critter {
 			if(!moved || checkPosition((x_coord+1)%Params.world_width, y_coord) || cnt == 0){
 				x_coord= (x_coord+1)%Params.world_width;
 			}
-			else
-				change(1);
+			else{
+				moved = false;
+				change(4);
+				moved = true;
+			}
 			break;
 		case 1 :
 			if(!moved || checkPosition((x_coord+1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
 				x_coord =(x_coord+1)%Params.world_width;
 				y_coord = (y_coord+1)%Params.world_height;
 			}
-			else
-				change(2);
+			else{
+				moved = false;
+				change(5);
+				moved = true;
+			}
 			break;
 		case 2 :
 			if(!moved || checkPosition(x_coord, (y_coord+1)%Params.world_height) || cnt == 0)
 				y_coord = (y_coord+1)%Params.world_height;
-			else
-				change(3);
+			else{
+				moved = false;
+				change(6);
+				moved = true;
+			}
 			break;
 		case 3:
 			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 				y_coord = (y_coord+1)%Params.world_height;
 			}
-			else
-				change(4);
+			else{
+				moved = false;
+				change(7);
+				moved = true;
+			}
 			break;
 		case 4:
 			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord) || cnt == 0)
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
-			else
-				change(5);
+			else{
+				moved = false;
+				change(0);
+				moved = true;
+			}
 			break;
 		case 5:
 			if(!moved || checkPosition((Params.world_width+x_coord-1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
 				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
 				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
 			}
-			else
-				change(6);
+			else{
+				moved = false;
+				change(1);
+				moved = true;
+			}
 			break;
 		case 6:
 			if(!moved || checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0)
 				y_coord=(Params.world_height+y_coord-1)%Params.world_height;
-			else
-				change(7);
+			else{
+				moved = false;
+				change(2);
+				moved = true;
+			}
 			break;
 		case 7:
 			if(!moved || checkPosition((x_coord+1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
 				x_coord = (x_coord+1)%Params.world_width;
 				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
+			}
+			else{
+				moved = false;
+				change(3);
+				moved = true;
 			}
 			break;
 		}
@@ -231,16 +260,12 @@ public abstract class Critter {
 			c=x;
 			Critter check = (Critter)x.newInstance();
 		} catch(NoClassDefFoundError e){
-			//System.out.println("error processing: make " + critter_class_name);
 			return;
 		}catch (ClassNotFoundException e1) {
-			//System.out.println("error processing: make " + critter_class_name);
 			return;
 		}catch (InstantiationException e2) {
-			//System.out.println("error processing: make " + critter_class_name);
 			return;
 		}catch(ClassCastException e3){
-			//System.out.println("error processing: make " + critter_class_name);
 			return;
 		}
 		//System.out.println(c);
@@ -249,26 +274,6 @@ public abstract class Critter {
 		z.y_coord =  getRandomInt(Params.world_height-1);
 		z.energy = Params.start_energy;
 		population.add(z);
-		
-		
-		/*if (critter_class_name.equals("Craig")) 
-		{
-			Critter z =  new Craig();
-			z.x_coord= getRandomInt(Params.world_width-1);
-			z.y_coord =  getRandomInt(Params.world_height-1);
-			z.energy = Params.start_energy;
-			population.add(z);
-		}
-		else if (critter_class_name.equals("Algae"))
-		{
-			Critter y = new Algae();
-			y.x_coord= getRandomInt(Params.world_width-1);
-			y.y_coord =  getRandomInt(Params.world_height-1);
-			y.energy = Params.start_energy;
-			population.add(y);
-		}//compare to more if more subclasses exist
-		
-		*/
 
 	}
 	
