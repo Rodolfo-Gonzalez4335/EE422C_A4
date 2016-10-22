@@ -26,6 +26,7 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	private int cnt = 0;
 	//private List<Critter> savedpopulation = new java.util.ArrayList<Critter>();
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
@@ -69,32 +70,59 @@ public abstract class Critter {
 		switch (direction)
 		{
 		case 0 :
-			x_coord= (x_coord+1)%Params.world_width;
+			if(checkPosition((x_coord+1)%Params.world_width, y_coord) || cnt == 0){
+				x_coord= (x_coord+1)%Params.world_width;
+			}
+			else
+				change(1);
 			break;
 		case 1 :
-			x_coord =(x_coord+1)%Params.world_width;
-			y_coord = (y_coord+1)%Params.world_height;
+			if(checkPosition((x_coord+1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
+				x_coord =(x_coord+1)%Params.world_width;
+				y_coord = (y_coord+1)%Params.world_height;
+			}
+			else
+				change(2);
 			break;
 		case 2 :
-			y_coord = (y_coord+1)%Params.world_height;
+			if(checkPosition(x_coord, (y_coord+1)%Params.world_height) || cnt == 0)
+				y_coord = (y_coord+1)%Params.world_height;
+			else
+				change(3);
 			break;
 		case 3:
-			x_coord = (Params.world_width+x_coord-1)%Params.world_width;
-			y_coord = (y_coord+1)%Params.world_height;
+			if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, (y_coord+1)%Params.world_height) || cnt == 0){
+				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
+				y_coord = (y_coord+1)%Params.world_height;
+			}
+			else
+				change(4);
 			break;
 		case 4:
-			x_coord = (Params.world_width+x_coord-1)%Params.world_width;
+			if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, y_coord) || cnt == 0)
+				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
+			else
+				change(5);
 			break;
 		case 5:
-			x_coord = (Params.world_width+x_coord-1)%Params.world_width;
-			y_coord =(Params.world_height+y_coord-1)%Params.world_height;
+			if(checkPosition((Params.world_width+x_coord-1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+				x_coord = (Params.world_width+x_coord-1)%Params.world_width;
+				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
+			}
+			else
+				change(6);
 			break;
 		case 6:
-			y_coord=(Params.world_height+y_coord-1)%Params.world_height;
+			if(checkPosition(x_coord, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0)
+				y_coord=(Params.world_height+y_coord-1)%Params.world_height;
+			else
+				change(7);
 			break;
 		case 7:
-			x_coord = (x_coord+1)%Params.world_width;
-			y_coord =(Params.world_height+y_coord-1)%Params.world_height;
+			if(checkPosition((x_coord+1)%Params.world_width, (Params.world_height+y_coord-1)%Params.world_height) || cnt == 0){
+				x_coord = (x_coord+1)%Params.world_width;
+				y_coord = (Params.world_height+y_coord-1)%Params.world_height;
+			}
 			break;
 		}
 		
@@ -393,6 +421,7 @@ public abstract class Critter {
 		{
 			Critter x = population.get(i);
 			x.doTimeStep();		//we can make them fight here
+			x.cnt++;
 		}
 		
 		//do the fights
@@ -437,6 +466,7 @@ public abstract class Critter {
 		{					
 			Critter x = population.get(i);
 			x.energy= x.energy-Params.rest_energy_cost;
+			x.cnt = 0;
 		}
 		// deleting Critter
 		for (int i=0; i<population.size(); i++)
