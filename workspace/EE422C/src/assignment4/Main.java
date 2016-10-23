@@ -118,7 +118,10 @@ public class Main {
         		if (commands.get(0).equals("quit"))
     				stop= true;
     			else if (commands.get(0).equals("show")){
-    				Critter.displayWorld();
+    				if(commands.size()==1)
+    					Critter.displayWorld();
+    				else
+    					Critter.processing(input);
     			}
     			else if (commands.get(0).equals("step")){
     				if(commands.size() == 2){
@@ -172,7 +175,7 @@ public class Main {
         				Critter.setSeed(x);
     				}
     				else{
-        	        	Critter.invalid(input);
+        	        	Critter.processing(input);
     				}
     			}
     			else if (commands.get(0).equals("stats"))
@@ -189,6 +192,9 @@ public class Main {
     			else{
     	        	Critter.invalid(input);
     			}
+        	}
+        	else{
+        		Critter.processing(input);
         	}
         }
         System.out.println("GLHF");
