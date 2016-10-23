@@ -205,7 +205,6 @@ public abstract class Critter {
 		this.energy= this.energy/2 + this.energy%2; //rounding up the energy of parent
 		offspring.x_coord= x[0];
 		offspring.y_coord = x[1];
-		//adding the baby
 		
 		babies.add(offspring);
 	}
@@ -598,10 +597,10 @@ public abstract class Critter {
 	}
 
 	public static void processing(String input){
-		System.out.println("error processing: " + input);
+		System.out.println("critter>error processing: " + input);
 	}
 	public static void invalid(String input){
-		System.out.println("invalid command: " + input);
+		System.out.println("critter>invalid command: " + input);
 	}
 	public static boolean checkPosition(int x, int y){
 		for(Critter e : population){
