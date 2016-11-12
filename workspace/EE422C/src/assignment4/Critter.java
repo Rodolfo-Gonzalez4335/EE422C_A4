@@ -295,8 +295,8 @@ public abstract class Critter {
 		}
 		//System.out.println(c);
 		Critter z = (Critter) c.newInstance();
-		z.x_coord= getRandomInt(Params.world_width-1);
-		z.y_coord =  getRandomInt(Params.world_height-1);
+		z.x_coord= getRandomInt(Params.world_width);
+		z.y_coord =  getRandomInt(Params.world_height);
 		z.energy = Params.start_energy;
 		population.add(z);
 
@@ -513,8 +513,8 @@ public abstract class Critter {
 		{
 			Critter x = new Algae();
 			x.energy= Params.start_energy;
-			x.x_coord= Critter.getRandomInt(Params.world_width-1);
-			x.y_coord= Critter.getRandomInt(Params.world_height-1);
+			x.x_coord= Critter.getRandomInt(Params.world_width);
+			x.y_coord= Critter.getRandomInt(Params.world_height);
 			population.add(x);
 		}
 		
